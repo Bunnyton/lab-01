@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "name": "Shalagin Enakentiy",
+      "group": 100000001,
+      "avg": 4.25,
+      "debt": ["C++"
+             , "C"
+             , "JAVA"]
+
+    },
+    {
+      "name": "Konstantin Dark",
+      "group": "Infinity",
+      "avg": 5,
+      "debt": "Manuscripts"
+    },
+    {
+      "name": "Petrova Dasha",
+      "group": "IU8-38",
+      "avg": 4.5,
+      "debt": [ "Testo"
+              , "Tili" ]
+    }
+  ],
+  "_meta": {
+    "count": 3
+  }
+}
