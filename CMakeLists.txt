@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,18 +20,11 @@ HunterGate(
   SHA1 "95c47c92f68edb091b5d6d18924baabe02a6962a"
 )
 
-project(lab-01-parser)
-
-add_library(${PROJECT_NAME} STATIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
-        demo/main.cpp
-        sources/student.cpp include/student.hpp sources/print.cpp include/print.hpp)
-
+project(lab-01-parser VERSION 0.1.0)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
-add_compile_definitions(JFile1="${CMAKE_CURRENT_SOURCE_DIR}/json_files/students.json")
-add_compile_definitions(JFile2="${CMAKE_CURRENT_SOURCE_DIR}/json_files/students2.json")
+add_compile_definitions(JFile="${CMAKE_CURRENT_SOURCE_DIR}/files/students.json")
 
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
@@ -39,9 +32,14 @@ find_package(GTest CONFIG REQUIRED)
 hunter_add_package(nlohmann_json)
 find_package(nlohmann_json CONFIG REQUIRED)
 
+add_library(${PROJECT_NAME} STATIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/student.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/student.cpp
+)
 
 add_executable(demo
-        demo/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/student.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -51,11 +49,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(demo ${PROJECT_NAME})
 
+
 if(BUILD_TESTS)
   add_executable(tests
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
+          ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
   )
   target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
+  target_link_libraries(tests ${PROJECT_NAME})
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
@@ -97,4 +97,5 @@ install(EXPORT "${PROJECT_NAME}-targets"
   NAMESPACE "${PROJECT_NAME}::"
   DESTINATION "lib/cmake"
 )
-target_link_libraries(lab-01-parser nlohmann_json::nlohmann_json)
+
+target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
