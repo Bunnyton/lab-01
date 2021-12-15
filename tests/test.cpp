@@ -4,8 +4,6 @@
 
 #include "print.hpp"
 
-using json = nlohmann::json;
-
 const std::string &jsonPath1 = JFile1;
 const std::string &jsonPath2 = JFile2;
 
@@ -15,7 +13,7 @@ std::string test(const std::string& jsonPath) {
     throw std::runtime_error{"unable to open json: " + jsonPath};
   }
 
-  json data;
+  nlohmann::json data;
   file >> data;
 
   std::vector<Student> students;

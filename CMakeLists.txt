@@ -36,7 +36,9 @@ find_package(nlohmann_json CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include/student.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/print.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/student.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/print.cpp
 )
 
 add_executable(demo
