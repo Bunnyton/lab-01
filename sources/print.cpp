@@ -80,7 +80,7 @@ void print(const Student& student, std::ostream& os, int* maxlength) {
     }
     maxlength_ptr++;
   }
-  print(os, new std::string(""), *(maxlength_ptr));
+  print(os, new std::string(" "), *(maxlength_ptr));
   print_pass(os, maxlength);
 }
 
