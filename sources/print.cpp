@@ -3,12 +3,12 @@
 #include "print.hpp"
 
 //-------------------------------BASE PRINT FUNCTIONS-------------------
+
+void print_endl(std::ostream& os) { os << '|' << std::endl; }
+
 void print(std::ostream& os, std::string* str, int maxlength) {
   os << '|';
-  if (maxlength == 0) {
-    os << std::endl;
-    return;
-  }
+  if (maxlength == 0) return;
 
   unsigned space_front_count =
       (maxlength - str->length()) / 2 + (maxlength - str->length()) % 2 + 1;
@@ -21,10 +21,7 @@ void print(std::ostream& os, std::string* str, int maxlength) {
 
 void print(std::ostream& os, std::string str, int maxlength) {
   os << '|';
-  if (maxlength == 0) {
-    os << std::endl;
-    return;
-  }
+  if (maxlength == 0) return;
 
   unsigned space_front_count =
       (maxlength - str.length()) / 2 + (maxlength - str.length()) % 2 + 1;
@@ -40,7 +37,7 @@ void print_pass(std::ostream& os, const int* maxlength) {
     os << '|';
     for (int j = 0; j < maxlength[i] + 2; ++j) os << '-';
   }
-  os << '|' << std::endl;
+  print_endl(os);
 }
 
 void print_header(std::ostream& os, int* maxlength) {
@@ -48,7 +45,7 @@ void print_header(std::ostream& os, int* maxlength) {
   print(os, new std::string("group"), *(maxlength + 1));
   print(os, new std::string("avg"), *(maxlength + 2));
   print(os, new std::string("debt"), *(maxlength + 3));
-  print(os, new std::string(""), *(maxlength + 4));
+  print_endl(os);
   print_pass(os, maxlength);
 }
 
@@ -80,7 +77,7 @@ void print(const Student& student, std::ostream& os, int* maxlength) {
     }
     maxlength_ptr++;
   }
-  print(os, new std::string(" "), *(maxlength_ptr));
+  print_endl(os);
   print_pass(os, maxlength);
 }
 
@@ -96,8 +93,7 @@ static void length_compare(std::string str, int& length) {
 }
 
 int* get_column_size(const std::vector<Student>& students) {
-  int* maxlength = new int[STUD_PARAM_LENGTH + 1]{
-      0, 0, 0, 0, 0};  // 5 - it is end of columns
+  int* maxlength = new int[STUD_PARAM_LENGTH]{0, 0, 0, 0};
   for (const auto& student : students) {
     std::any name = std::any(student.name);
     const std::any* any[STUD_PARAM_LENGTH] = {&name, &student.group,
