@@ -53,26 +53,23 @@ void print(const Student& student, std::ostream& os, int* maxlength) {
   const std::any name = std::any(student.name);
   const std::any* any[STUD_PARAM_LENGTH] = {&name, &student.group, &student.avg,
                                             &student.debt};
-
+  std::string null_str = "null";
   int* maxlength_ptr = maxlength;
   for (const auto item : any) {
     if (item->type() == typeid(std::nullptr_t)) {
-      print(os, new std::string("null"), *(maxlength_ptr));
+      print(os, null_str, *(maxlength_ptr));
     } else if (item->type() == typeid(std::string)) {
       print(os, std::any_cast<std::string>(*item), *(maxlength_ptr));
     } else if (item->type() == typeid(std::size_t)) {
-      print(os,
-            new std::string(std::to_string(std::any_cast<std::size_t>(*item))),
+      print(os, std::to_string(std::any_cast<std::size_t>(*item)),
             *(maxlength_ptr));
     } else if (item->type() == typeid(double)) {
-      print(os, new std::string(std::to_string(std::any_cast<double>(*item))),
-            *(maxlength_ptr));
+      print(os, std::to_string(std::any_cast<double>(*item)), *(maxlength_ptr));
     } else {
       print(os,
-            new std::string(
-                std::to_string(
-                    std::any_cast<std::vector<std::string>>(item)->size()) +
-                (std::string) " items"),
+            std::to_string(
+                std::any_cast<std::vector<std::string>>(item)->size()) +
+                (std::string) " items",
             *(maxlength_ptr));
     }
     maxlength_ptr++;
@@ -104,23 +101,20 @@ int* get_column_size(const std::vector<Student>& students) {
     int* maxlength_ptr = maxlength;
     for (const auto item : any) {
       if (item->type() == typeid(std::nullptr_t)) {
-        length_compare(new std::string("null"), *maxlength_ptr);
+        length_compare(null_str, *maxlength_ptr);
       } else if (item->type() == typeid(std::string)) {
         length_compare(std::any_cast<std::string>(*item), *maxlength_ptr);
       } else if (item->type() == typeid(std::size_t)) {
-        length_compare(
-            new std::string(std::to_string(std::any_cast<std::size_t>(*item))),
-            *maxlength_ptr);
+        length_compare(std::to_string(std::any_cast<std::size_t>(*item)),
+                       *maxlength_ptr);
       } else if (item->type() == typeid(double)) {
-        length_compare(
-            new std::string(std::to_string(std::any_cast<double>(*item))),
-            *maxlength_ptr);
+        length_compare(std::to_string(std::any_cast<double>(*item)),
+                       *maxlength_ptr);
       } else {
         length_compare(
-            new std::string(
-                std::to_string(
-                    std::any_cast<std::vector<std::string>>(item)->size()) +
-                (std::string) " items"),
+            std::to_string(
+                std::any_cast<std::vector<std::string>>(item)->size()) +
+                (std::string) " items",
             *maxlength_ptr);
       }
       maxlength_ptr++;
