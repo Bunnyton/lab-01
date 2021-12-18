@@ -19,6 +19,22 @@ void print(std::ostream& os, std::string* str, int maxlength) {
   for (unsigned i = 0; i < space_back_count; ++i) os << ' ';
 }
 
+void print(std::ostream& os, std::string str, int maxlength) {
+  os << '|';
+  if (maxlength == 0) {
+    os << std::endl;
+    return;
+  }
+
+  unsigned space_front_count =
+      (maxlength - str.length()) / 2 + (maxlength - str.length()) % 2 + 1;
+  unsigned space_back_count = (maxlength - str.length()) / 2 + 1;
+
+  for (unsigned i = 0; i < space_front_count; ++i) os << ' ';
+  os << str;
+  for (unsigned i = 0; i < space_back_count; ++i) os << ' ';
+}
+
 void print_pass(std::ostream& os, const int* maxlength) {
   for (int i = 0; i < STUD_PARAM_LENGTH; ++i) {
     os << '|';
@@ -46,8 +62,7 @@ void print(const Student& student, std::ostream& os, int* maxlength) {
     if (item->type() == typeid(std::nullptr_t)) {
       print(os, new std::string("null"), *(maxlength_ptr));
     } else if (item->type() == typeid(std::string)) {
-      print(os, new std::string(std::any_cast<std::string>(*item)),
-            *(maxlength_ptr));
+      print(os, std::any_cast<std::string>(*item), *(maxlength_ptr));
     } else if (item->type() == typeid(std::size_t)) {
       print(os,
             new std::string(std::to_string(std::any_cast<std::size_t>(*item))),
@@ -75,6 +90,11 @@ static void length_compare(std::string* str, int& length) {
     length = static_cast<int>(str->length());
 }
 
+static void length_compare(std::string str, int& length) {
+  if (static_cast<int>(str.length()) > length)
+    length = static_cast<int>(str.length());
+}
+
 int* get_column_size(const std::vector<Student>& students) {
   int* maxlength = new int[STUD_PARAM_LENGTH + 1]{
       0, 0, 0, 0, 0};  // 5 - it is end of columns
@@ -90,8 +110,7 @@ int* get_column_size(const std::vector<Student>& students) {
       if (item->type() == typeid(std::nullptr_t)) {
         length_compare(new std::string("null"), *maxlength_ptr);
       } else if (item->type() == typeid(std::string)) {
-        length_compare(new std::string(std::any_cast<std::string>(*item)),
-                       *maxlength_ptr);
+        length_compare(std::any_cast<std::string>(*item), *maxlength_ptr);
       } else if (item->type() == typeid(std::size_t)) {
         length_compare(
             new std::string(std::to_string(std::any_cast<std::size_t>(*item))),

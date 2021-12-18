@@ -12,6 +12,7 @@
 
 //-----------------BASE PRINT FUNCTIONS-----------------------------------------
 void print(std::ostream& os, std::string* str, int maxlength);
+void print(std::ostream& os, std::string str, int maxlength);
 void print_pass(std::ostream& os, const int* maxlength);
 void print_header(std::ostream& os, int* maxlength);
 void print(const Student& student, std::ostream& os, int* maxlength);
