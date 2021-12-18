@@ -6,19 +6,6 @@
 
 void print_endl(std::ostream& os) { os << '|' << std::endl; }
 
-void print(std::ostream& os, std::string* str, int maxlength) {
-  os << '|';
-  if (maxlength == 0) return;
-
-  unsigned space_front_count =
-      (maxlength - str->length()) / 2 + (maxlength - str->length()) % 2 + 1;
-  unsigned space_back_count = (maxlength - str->length()) / 2 + 1;
-
-  for (unsigned i = 0; i < space_front_count; ++i) os << ' ';
-  os << *str;
-  for (unsigned i = 0; i < space_back_count; ++i) os << ' ';
-}
-
 void print(std::ostream& os, std::string str, int maxlength) {
   os << '|';
   if (maxlength == 0) return;
@@ -41,10 +28,10 @@ void print_pass(std::ostream& os, const int* maxlength) {
 }
 
 void print_header(std::ostream& os, int* maxlength) {
-  print(os, new std::string("name"), *maxlength);
-  print(os, new std::string("group"), *(maxlength + 1));
-  print(os, new std::string("avg"), *(maxlength + 2));
-  print(os, new std::string("debt"), *(maxlength + 3));
+  print(os, std::string("name"), *maxlength);
+  print(os, std::string("group"), *(maxlength + 1));
+  print(os, std::string("avg"), *(maxlength + 2));
+  print(os, std::string("debt"), *(maxlength + 3));
   print_endl(os);
   print_pass(os, maxlength);
 }
