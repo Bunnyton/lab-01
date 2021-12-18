@@ -79,11 +79,6 @@ void print(const Student& student, std::ostream& os, int* maxlength) {
 }
 
 //--------------------------------GET TABLE SIZE--------------------------------
-static void length_compare(std::string* str, int& length) {
-  if (static_cast<int>(str->length()) > length)
-    length = static_cast<int>(str->length());
-}
-
 static void length_compare(std::string str, int& length) {
   if (static_cast<int>(str.length()) > length)
     length = static_cast<int>(str.length());
@@ -120,10 +115,10 @@ int* get_column_size(const std::vector<Student>& students) {
       maxlength_ptr++;
     }
   }
-  length_compare(new std::string("name"), *maxlength);
-  length_compare(new std::string("group"), *(maxlength + 1));
-  length_compare(new std::string("avg"), *(maxlength + 2));
-  length_compare(new std::string("debt"), *(maxlength + 3));
+  length_compare(std::string("name"), *maxlength);
+  length_compare(std::string("group"), *(maxlength + 1));
+  length_compare(std::string("avg"), *(maxlength + 2));
+  length_compare(std::string("debt"), *(maxlength + 3));
   return maxlength;
 }
 //-------------------------------PRINT FUNCTION--------------------------------
